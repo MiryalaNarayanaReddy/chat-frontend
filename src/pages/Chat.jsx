@@ -1,50 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import './Chat.css';
+import Users from './Users';
 
 function Chat() {
-  const [message, setMessage] = useState('');
-  const [chat, setChat] = useState([]);
-
-  const useTranslation = (enabled) => {
-    const [translatedMessage, setTranslatedMessage] = useState('');
-  
-    const translate = (message) => {
-      if (enabled) {
-        // Simple mock translation logic
-        return message.split('').reverse().join('');
-      }
-      return message;
-    };
-
-    return translate;
-  };
-  const [translationEnabled,setTranslationEnabled] = useState(false);
-  const translateMessage = useTranslation(translationEnabled);
-
-  const sendMessage = () => {
-    
-  };
+  console.log("Chat component is rendering");
 
   return (
-    <div className="chat-container">
-      <div className="chat-box">
-        {chat.map((msg, index) => (
-          <div key={index} className="chat-message">
-            {msg}
-          </div>
-        ))}
-      </div>
-      <div className="chat-input">
-        <input
-          type="text"
-          placeholder="Type a message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <button onClick={sendMessage}>Send</button>
-        <button onClick={()=>setTranslationEnabled(!translationEnabled)}>toggle translation</button>
-      </div>
-    </div>
+    <div className='flex flex-row '>
+     
+     <div class="relative">
+     <div class="fixed top-0 left-0 right-0">
+      
+     <Users />
+
+     </div>
+
+     </div>
+
+     </div>
   );
 }
 
