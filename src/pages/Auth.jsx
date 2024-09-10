@@ -13,22 +13,39 @@ const Auth = () => {
 //     { username: "alpha", password: "alpha" },
 //   ]);
 
-  const handleLogin = () => {
-    axios.post(`${API_URL}/auth/login`,{
-        username,
-        password
-    }).then(res=>{
-        console.log(res)
-    })
+  const handleLogin = async () => {
+    const res = await axios.post(`${API_URL}/auth/login`, {
+      username,
+      password
+    });
+    // console.log('Response:', res);
+    if(res.data.error){
+      alert(res.data.error)
+    }
+    else{
+      localStorage.setItem('token',res.data.token)
+      alert('successfully logged in')
+
+    }
   };
 
-  const handleSignup = () => {
-    axios.post(`${API_URL}/auth/signup`,{
-        username,
-        password
-    }).then(res=>{
-        console.log(res)
-    })
+  const handleSignup = async () => {
+    const res = await axios.post(`${API_URL}/auth/signup`, {
+      username,
+      password
+    });
+    // console.log('Response:', res);
+    if(res.data.error){
+      alert(res.data.error)
+    }
+    else{
+      if(res.data.user){
+        alert('signup successfull')
+        setUsername('')
+        setPassword('')
+        setIsLogin(true)
+      }
+    }
   };
 
   const toggleForm = () => {
