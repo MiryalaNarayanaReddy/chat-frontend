@@ -26,6 +26,8 @@ const Auth = () => {
       localStorage.setItem('token',res.data.token)
       alert('successfully logged in')
 
+      window.location.href = 'http://localhost:5173/chat'
+
     }
   };
 
@@ -53,6 +55,7 @@ const Auth = () => {
     setError("");
     setUsername("");
     setPassword("");
+
   };
 
   const handleSubmit = (e) => {
