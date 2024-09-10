@@ -28,6 +28,7 @@ function Prompt() {
 
   const userId = getUserIdFromToken();  // Extract the userId from the token
 
+  // Function to handle mock translation (for demo purposes)
   const useTranslation = (enabled) => {
     const translate = (message) => {
       if (enabled) {
@@ -55,7 +56,7 @@ function Prompt() {
 
     wsConnection.onmessage = (event) => {
       const messageData = JSON.parse(event.data);
-      setChat((prevChat) => [...prevChat, messageData.content]);
+      setChat((prevChat) => [...prevChat, `Sender: ${messageData.content}`]);
     };
 
     wsConnection.onclose = () => {
@@ -70,12 +71,15 @@ function Prompt() {
   }, [userId, chatId]);
 
   const sendMessage = () => {
-    const translated = translateMessage(message);
+    const translated = translateMessage(message);  // Translate the message if enabled
     if (ws && ws.readyState === WebSocket.OPEN) {
       const messageObj = {
         type: 'message',
         senderId: userId,
-        content: translated
+        content: message,  // Original message
+        translatedMessage: translationEnabled ? translated : null,  // Translated message if applicable
+        originalLanguage: 'en',  // Set your original language (e.g., English)
+        translatedLanguage: translationEnabled ? 'es' : null  // Set your translated language (e.g., Spanish)
       };
       ws.send(JSON.stringify(messageObj));
       setChat((prevChat) => [...prevChat, `Me: ${translated}`]);
